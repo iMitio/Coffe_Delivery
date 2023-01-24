@@ -11,67 +11,50 @@ interface ErrorsTypes {
     }
 }
 
-export  function AddressForm () {
-    const  {register, formState} = useFormContext();
-    const  {errors} = formState as unknown as ErrorsTypes
-
+export function AddressForm() {
+    const { register, formState } = useFormContext();
+  
+    const { errors } = formState as unknown as ErrorsTypes;
+  
     return (
-        <AddressFormContainer>
-            <Input 
-                placeholder="CEP"
-                type="number" 
-                className="cep"
-                {...register("cep")}
-                error={errors.cep?.message}
-            />
-
-            <Input 
-                placeholder="Rua"
-                type="text"
-                className="street" 
-                {...register("street")}
-                error={errors.street?.message}
-
-            />
-
-            <Input 
-                placeholder="Número" 
-                type="number" 
-                {...register("number")}
-                error={errors.number?.message}
-
-                
-            />
-
-            <Input 
-                placeholder="Complemento"
-                className="complement" 
-                {...register("complement")}
-                error={errors.complement?.message}
-
-            />
-
-            <Input 
-                placeholder="Bairro" 
-                {...register("district")} 
-                error={errors.district?.message}
-
-            />
-
-            <Input 
-                placeholder="Cidade" 
-                {...register("city")}
-                error={errors.city?.message}
-
-            />
-
-            <Input 
-                placeholder="UF" 
-                {...register("uf")}
-                error={errors.uf?.message}
-
-            />
-
-        </AddressFormContainer>
-    )
-}
+      <AddressFormContainer>
+        <Input
+          placeholder="CEP"
+          type="number"
+          className="cep"
+          {...register("cep")}
+          error={errors.cep?.message}
+        />
+        <Input
+          placeholder="Rua"
+          className="street"
+          {...register("street")}
+          error={errors.street?.message}
+        />
+        <Input
+          type="number"
+          placeholder="Número"
+          {...register("number")}
+          error={errors.number?.message}
+        />
+        <Input
+          placeholder="Complemento"
+          className="complement"
+          {...register("complement")}
+          error={errors.complement?.message}
+          rightText="Optional"
+        />
+        <Input
+          placeholder="Bairro"
+          {...register("district")}
+          error={errors.district?.message}
+        />
+        <Input
+          placeholder="Cidade"
+          {...register("city")}
+          error={errors.city?.message}
+        />
+        <Input placeholder="UF" {...register("uf")} error={errors.uf?.message} />
+      </AddressFormContainer>
+    );
+  }

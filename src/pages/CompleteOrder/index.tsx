@@ -6,23 +6,37 @@ import {zodResolver} from "@hookform/resolvers/zod"
 import {useForm, FormProvider} from "react-hook-form"
 import { CompleteOrderContainer } from "./styles";
 
-export type OrdemData =  zod.infer<typeof confirmOrdemFormValidationSchema>;
+export type OrdemData =  zod.infer<typeof confirmOrderFormValidationSchema>;
 
 type ConfirmOdremFormData = OrdemData
 
-const confirmOrdemFormValidationSchema = zod.object({
-    cep: zod.string().min(8, "Digite o seu CEP corretamente"),
-    rua: zod.string().min(25).max(30),
-    number: zod.number().gte(1, { message: "this👏is👏too👏big" }),
-    complement: zod.string().optional(),
-    district: zod.string().min(1, "Informe o nome da sua rua").max(20),
-    city: zod.string().min(1, "Informe a sua cidade").max(20),
-    uf: zod.string().min(2, "Informe sua Unidade Federativa").max(2).transform((val) => val.toUpperCase)
-})
+enum PaymentMethods {
+     credit = "credit",
+     debit = "debit",
+     money = "money"
+}
+
+const confirmOrderFormValidationSchema = zod.object({
+    cep: zod.string().min(1, "Informe o CEP"),
+    street: zod.string().min(1, "Informe o Rua"),
+    number: zod.string().min(1, "Informe o Número"),
+    complement: zod.string(),
+    district: zod.string().min(1, "Informe o Bairro"),
+    city: zod.string().min(1, "Informe a Cidade"),
+    uf: zod.string().min(1, "Informe a UF"),
+    paymentMethod: zod.nativeEnum(PaymentMethods, {
+      errorMap: () => {
+        return { message: "Informe o método de pagamento" };
+      },
+    }),
+  });
+
+  
 export function CompleteOrder () {
 
     const confirmOrdemForm= useForm<ConfirmOdremFormData>({
-        resolver: zodResolver(confirmOrdemFormValidationSchema)
+        resolver: zodResolver(confirmOrderFormValidationSchema),
+        
     })
 
     const {handleSubmit} = confirmOrdemForm;

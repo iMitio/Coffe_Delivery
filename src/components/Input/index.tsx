@@ -1,16 +1,20 @@
 import { forwardRef,InputHTMLAttributes } from "react"
 import { RegularText } from "../Typography/styled";
-import { InputStyleContainer, InputWrapper } from "./styles"
+import { InputStyleContainer, InputWrapper, InputStyled, RightText } from "./styles"
 
 type InputProps  = InputHTMLAttributes<HTMLInputElement>  & {
-    error?: string;
+    error?: string ;
+    rightText?: string;
 }
 
 
-export const Input = forwardRef<HTMLInputElement, InputProps>(({error, ...props}, ref) => {
+export const Input = forwardRef<HTMLInputElement, InputProps>(({error, className, rightText, ...props }, ref) => {
         return (
-           <InputWrapper>
-             <InputStyleContainer {...props} ref={ref}/>
+           <InputWrapper className={className}>
+             <InputStyleContainer {...props} ref={ref} hasError={!!error}>
+                <InputStyled {...props} ref={ref}/>
+                {rightText &&  <RightText>{rightText}</RightText>}
+             </InputStyleContainer>
                 {error && (
                     <RegularText size="s">
                         {error}
